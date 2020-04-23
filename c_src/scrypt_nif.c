@@ -7,8 +7,7 @@
 ERL_NIF_TERM
 hash_nif(ErlNifEnv *env, int argc, const ERL_NIF_TERM argv[])
 {
-	uint64_t N, logN;
-	uint32_t r, p, dk_len;
+	uint32_t logN, r, p, dk_len;
 
 	ErlNifBinary password, salt, bin_out;
 	int exitcode;
@@ -21,12 +20,11 @@ hash_nif(ErlNifEnv *env, int argc, const ERL_NIF_TERM argv[])
 		!enif_get_uint(env, argv[5], &dk_len))
 		return enif_make_badarg(env);
 
-	N = (uint64_t)(1) << logN;
 
 	enif_alloc_binary(dk_len, &bin_out);
 
 	exitcode = crypto_scrypt(password.data, password.size, salt.data, salt.size,
-							 N, r, p, bin_out.data, dk_len);
+							 logN, r, p, bin_out.data, dk_len);
 	if (exitcode == 0)
 	{
 		/* Success */
