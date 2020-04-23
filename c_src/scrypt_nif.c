@@ -7,8 +7,8 @@
 ERL_NIF_TERM
 hash_nif(ErlNifEnv *env, int argc, const ERL_NIF_TERM argv[])
 {
-	uint64_t N;
-	uint32_t logN, r, p, dk_len;
+	uint64_t N, logN;
+	uint32_t r, p, dk_len;
 
 	ErlNifBinary password, salt, bin_out;
 	int exitcode;
